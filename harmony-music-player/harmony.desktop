@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=Harmony
+Comment=A next-gen music player built with Electron. Listen to music from Spotify, SoundCloud, Google Play Music or your local disk.
+Exec="/opt/harmony/Harmony"
+Terminal=false
+Type=Application
+Icon=harmony
+Categories=Music;Audio;AudioVideo

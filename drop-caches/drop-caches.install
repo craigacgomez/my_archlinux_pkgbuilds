@@ -1,0 +1,13 @@
+post_install() {
+    systemctl enable drop-caches.timer
+    systemctl start drop-caches.timer
+}
+
+post_upgrade() {
+    systemctl restart drop-caches.timer
+}
+
+pre_remove() {
+    systemctl stop drop-caches.timer
+    systemctl disable drop-caches.timer
+}

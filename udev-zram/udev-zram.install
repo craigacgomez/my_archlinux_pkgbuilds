@@ -1,0 +1,12 @@
+post_install() {
+    echo "/dev/zram0 none swap defaults 0 0" >> /etc/fstab
+    echo "/dev/zram1 none swap defaults 0 0" >> /etc/fstab
+}
+
+post_upgrade() {
+    post_install
+}
+
+post_remove() {
+    sed -i '/zram/d' /etc/fstab
+}

@@ -1,0 +1,21 @@
+# Maintainer:  Craig Gomez <craigacgomez at gmail.com>
+# Contributor: Craig Gomez <craigacgomez at gmail.com>
+
+pkgname=drop-caches
+pkgver=1.0
+pkgrel=1
+pkgdesc="A systemd timer to drop kernel VM caches every 15 minutes"
+arch=('any')
+url="https://www.kernel.org/"
+license=('GPL')
+source=("${pkgname}.service" 
+        "${pkgname}.timer")
+install="${pkgname}.install"
+sha256sums=('6e19df96c023ed864df2b83302adf1188f7b3b48c816a275bc4440c862f17949'
+            '1f65513e145e0900949ba398a9aa13bea1ae8ae6d0751c35c20d10e3d61c19e3')
+
+package() {
+    install -dm755 "${pkgdir}/usr/lib/systemd/system"
+    install -Dm644 "${pkgname}.service" "${pkgdir}/usr/lib/systemd/system/${pkgname}.service"
+    install -Dm644 "${pkgname}.timer" "${pkgdir}/usr/lib/systemd/system/${pkgname}.timer"
+}

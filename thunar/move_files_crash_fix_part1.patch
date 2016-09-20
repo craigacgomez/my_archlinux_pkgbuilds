@@ -1,0 +1,19 @@
+--- Thunar-1.6.10/thunar/thunar-file.c	2015-05-22 06:25:36.000000000 -0700
++++ Thunar-1.6.10/thunar/thunar-file-fix.c	2016-09-18 14:19:46.422228656 -0700
+@@ -795,13 +795,15 @@
+       if (event_type == G_FILE_MONITOR_EVENT_MOVED)
+         {
+           /* reload the target file if cached */
++          if (other_path == NULL)
++            return;
+           other_file = thunar_file_cache_lookup (other_path);
+           if (other_file)
+               thunar_file_reload (other_file);
+           else
+               other_file = thunar_file_get (other_path, NULL);
+ 
+-          if (!other_file)
++          if (other_file == NULL)
+               return;
+ 
+           /* notify the thumbnail cache that we can now also move the thumbnail */

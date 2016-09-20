@@ -1,0 +1,22 @@
+# Maintainer:  Craig Gomez <craigacgomez at gmail.com>
+# Contributor: Craig Gomez <craigacgomez at gmail.com>
+
+pkgname=xflock4-light-locker
+pkgver=1.0
+pkgrel=1
+pkgdesc="XFCE lock screen script to support LightDM and Light Locker"
+arch=('any')
+url="https://www.xfce.org/"
+license=('GPL')
+depends=('xfce4-session'
+         'lightdm'
+         'light-locker')
+optdepends=('lightdm-flexiserver: Shell script to relay gdmflexiserver calls, such as from the Xfce Action Buttons panel plugin Switch User command, to lightdm')
+conflicts=('xfce-slimlock')
+source=("${pkgname}")
+sha256sums=('d0a4072c2ececdd47bbf65b7bf8924013ee68f4c6078c46a56759ed89383d8c4')
+
+package() {
+    install -dm755 "${pkgdir}/usr/local/bin"
+    install -Dm755 "${pkgname}" "${pkgdir}/usr/local/bin/xflock4"
+}

@@ -1,0 +1,41 @@
+# Maintainer:  Craig Gomez <craigacgomez at gmail.com>
+# Contributor: Craig Gomez <craigacgomez at gmail.com>
+
+pkgname=harmony-music-player
+_pkgname=harmony
+pkgver=0.2.4
+pkgrel=1
+pkgdesc="A next-gen music player built with Electron."
+arch=('i686' 'x86_64')
+url="http://getharmony.xyz"
+license=('GPL')
+source=("https://github.com/vincelwt/${_pkgname}/releases/download/${pkgver}/${_pkgname}-${pkgver}.tar.xz"
+        "https://github.com/vincelwt/${_pkgname}/blob/master/build/icons/16x16.png"
+        "https://github.com/vincelwt/${_pkgname}/blob/master/build/icons/32x32.png"
+        "https://github.com/vincelwt/${_pkgname}/blob/master/build/icons/256x256.png"
+        "${_pkgname}.desktop")
+sha256sums=('0255aea63793ebbb174cfd75f4bc2120f590f94ddc066a0ba994d8cd7df6601c'
+            '22595267907913288fc89ff0a68865501dba7bb66b31a28a2a239a16a83f4a0a'
+            '595fc6ac24f2f81384ca3467a6205bed2e6f1d172e63af65dea75cd3fb26252e'
+            '09a527392048897f30f561caa4bfc1379ba06f9876ed9168f8d1c34b1939f60c'
+            '3fcce1804980bacefa7be7a3ca945acf9ccb351865f0e618d7c6f7c54d9d55c0')
+options=('!strip')
+
+package() {
+
+	# Install the packages
+    install -m 755 -d "${pkgdir}/opt/${_pkgname}"
+    cp -dpr "${_pkgname}-${pkgver}"/* "${pkgdir}/opt/${_pkgname}"
+
+    # Copy icons
+    install -m 755 -d "${pkgdir}/usr/share/icons"
+    for _size in 16 32 256
+    do
+        install -m 755 -d "${pkgdir}/usr/share/icons/hicolor/${_size}x${_size}/apps"
+        install -m 644 "${_size}x${_size}.png" "${pkgdir}/usr/share/icons/hicolor/${_size}x${_size}/apps/${_pkgname}.png"
+    done
+
+    # Copy desktop file
+    install -m 755 -d "${pkgdir}/usr/share/applications"
+    install -m 644 "${_pkgname}.desktop" "${pkgdir}/usr/share/applications/${_pkgname}.desktop"
+}

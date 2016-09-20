@@ -1,0 +1,7 @@
+[Unit]
+Description=Drop Caches to free memory
+
+[Service]
+Type=oneshot
+IOSchedulingClass=idle
+ExecStart=/bin/sh -c 'sync; echo 3 > /proc/sys/vm/drop_caches; echo 1 > /proc/sys/vm/compact_memory'
