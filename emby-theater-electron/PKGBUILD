@@ -1,0 +1,37 @@
+# Maintainer: Craig Gomez
+
+pkgname=emby-theater-electron-git
+_pkgname=emby-theater-electron
+pkgver=r330.14b9571
+pkgrel=1
+pkgdesc="Official Emby media server client"
+arch=('i686' 'x86_64')
+url="https://emby.media/community/index.php?/topic/42868-emby-theater-for-linux/page-1"
+license=('GPL')
+depends=('electron' 'mpv')
+optdepends=('libcec')
+makedepends=('npm')
+source=("git+https://github.com/MediaBrowser/${_pkgname}.git" "${_pkgname}.desktop" "emby.png")
+sha256sums=('SKIP'
+            'f6a38150e735feabd46b97d9f95f7fc74e490eaf37837b82ee6d69c15a431599'
+            '0233380122e1cbe6d92e87700450c556f5ab51f95c834e124cf75cc486036531')
+
+pkgver() {
+  cd "${srcdir}/${_pkgname}"
+  printf "r%s.%s" "$(git rev-list --count HEAD)" "$(git rev-parse --short HEAD)"
+}
+
+build() {
+  cd "${srcdir}/${_pkgname}"
+  npm install
+}
+
+package() {
+  cd "${srcdir}/${_pkgname}"
+
+  install -d "${pkgdir}/opt/${_pkgname}"
+  cp -r "${srcdir}/${_pkgname}"/* "${pkgdir}/opt/${_pkgname}/"
+  cp "${srcdir}/emby.png" "${pkgdir}/opt/${_pkgname}/"
+  chmod 755 "${pkgdir}/opt/${_pkgname}/et.sh"
+  desktop-file-install -m 644 --dir "${pkgdir}/usr/share/applications/" "${srcdir}/${_pkgname}.desktop"
+}
