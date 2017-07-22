@@ -2,7 +2,7 @@
 # Contributor: Craig Gomez <craigacgomez at gmail.com>
 
 pkgname=openprinting-ppds-pxlcolor-lanier
-pkgver=20160606
+pkgver=20161206
 pkgrel=1
 pkgdesc="PPD files for Lanier's PCL XL color printers, supplied by Ricoh"
 arch=('any')
@@ -13,7 +13,7 @@ depends=('cups'
          'ghostscript')
 source=("https://www.openprinting.org/download/printdriver/components/lsb3.2/main/RPMS/noarch/${pkgname}-${pkgver}-1lsb3.2.noarch.rpm")
 install="${pkgname}.install"
-sha256sums=('6ad019fc7fc00decc1aece5532c36cbb27c50d595eeb519be82e963c725cdf76')
+sha256sums=('27b68a6543f0eab66b3189239fb0b19a54db91ec7ca7c96f6325830761f452b1')
 
 package() {
     install -dm755 "${pkgdir}/usr/share/cups/model"

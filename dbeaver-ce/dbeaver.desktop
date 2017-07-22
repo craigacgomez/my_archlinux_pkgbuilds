@@ -1,0 +1,14 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Terminal=false
+Name=DBeaver CE
+GenericName=SQL Database Client
+Comment=Universal Database Manager and SQL Client.
+Path=/opt/dbeaver
+Exec=/opt/dbeaver/dbeaver
+Icon=dbeaver
+Categories=IDE;Development
+WM_CLASS=DBeaver
+StartupWMClass=SWT
+StartupNotify=true

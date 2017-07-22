@@ -1,0 +1,24 @@
+# $Id$
+# Maintainer: Wez Furlong
+
+pkgname=atomicparsley-stable
+pkgver=0.9.6
+pkgrel=1
+pkgdesc="A command line program for reading, parsing and setting iTunes-style metadata in MPEG4 files"
+arch=('i686' 'x86_64')
+url="http://atomicparsley.sourceforge.net/"
+license=('GPL')
+depends=('gcc-libs')
+source=("https://bitbucket.org/wez/atomicparsley/get/0.9.6.tar.gz")
+sha1sums=('2a6bad4427e3fba39c2134d231f8b26385e77ed3')
+
+build() {
+  cd "${srcdir}"/wez*
+  ./autogen.sh
+  ./configure
+  make
+}
+
+package() {
+  install -D -m755 ${srcdir}/wez*/AtomicParsley "${pkgdir}/usr/bin/AtomicParsley"
+}
