@@ -2,7 +2,7 @@
 
 pkgname=dbeaver-ce
 _pkgname=dbeaver
-pkgver=4.1.0
+pkgver=4.1.1
 pkgrel=1
 pkgdesc="A free universal database tool for developers and database administrators."
 arch=('i686' 'x86_64')
@@ -13,7 +13,7 @@ provides=('dbeaver')
 conflicts=('dbeaver')
 source=(dbeaver.desktop http://dbeaver.jkiss.org/files/${pkgver}/${pkgname}-${pkgver}-linux.gtk.x86_64.tar.gz)
 sha256sums=('3e22a144b14413949c7eae5543684232ee2464cfa381158be07fbc52a7bb57e2'
-            '2ad1eeea498596542cd5304e27441e0ace9a47ec2363725fc440e4f817e7d8f3')
+            '487593bfae55a5deb0a367a7364b5d8c78685fe8e8b66a3b4f18c6b30b8a8c22')
 noextract=("${pkgname}-${pkgver}-linux.gtk.x86_64.tar.gz")
 
 prepare() {
