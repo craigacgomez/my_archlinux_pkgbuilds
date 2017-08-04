@@ -2,15 +2,15 @@
 
 pkgname=emby-theater-electron-git
 _pkgname=emby-theater-electron
-pkgver=r330.14b9571
+pkgver=1.2.8.af4d3e9
 pkgrel=1
 pkgdesc="Official Emby media server client"
 arch=('i686' 'x86_64')
 url="https://emby.media/community/index.php?/topic/42868-emby-theater-for-linux/page-1"
 license=('GPL')
-depends=('electron' 'mpv')
+depends=('electron' 'mpv' 'npm')
 optdepends=('libcec')
-makedepends=('npm')
+install="${_pkgname}.install"
 source=("git+https://github.com/MediaBrowser/${_pkgname}.git" "${_pkgname}.desktop" "emby.png")
 sha256sums=('SKIP'
             'f6a38150e735feabd46b97d9f95f7fc74e490eaf37837b82ee6d69c15a431599'
@@ -18,12 +18,7 @@ sha256sums=('SKIP'
 
 pkgver() {
   cd "${srcdir}/${_pkgname}"
-  printf "r%s.%s" "$(git rev-list --count HEAD)" "$(git rev-parse --short HEAD)"
-}
-
-build() {
-  cd "${srcdir}/${_pkgname}"
-  npm install
+  printf "1.2.8.%s" "$(git log -1 --pretty=format:%h)"
 }
 
 package() {

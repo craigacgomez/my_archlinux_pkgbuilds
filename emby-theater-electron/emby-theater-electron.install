@@ -1,0 +1,9 @@
+post_install() {
+    cd /opt/emby-theater-electron
+    npm install
+}
+
+post_upgrade() {
+    cd /opt/emby-theater-electron
+    npm install
+}
