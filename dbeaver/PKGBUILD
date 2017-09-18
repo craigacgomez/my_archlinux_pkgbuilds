@@ -1,0 +1,37 @@
+# Maintainer: Craig Gomez
+
+pkgname=dbeaver
+pkgver=4.2.1
+pkgrel=1
+pkgdesc="A free universal database tool for developers and database administrators."
+arch=('i686' 'x86_64')
+url="http://dbeaver.jkiss.org/"
+license=("ASL 2.0")
+depends=('java-runtime>=8' 'gtk2' 'gtk-update-icon-cache')
+provides=('dbeaver')
+conflicts=('dbeaver')
+source=(dbeaver.desktop http://dbeaver.jkiss.org/files/${pkgver}/${pkgname}-ce-${pkgver}-linux.gtk.x86_64.tar.gz)
+sha256sums=('8bd0c1ce45d24333bc8ecf04a666a3ff5febe0e1d2198ebce282751e172b09d4'
+            '57da0be08ec2bd260c14093f064e96480380afa9be88fd413b50d00e99c64b0a')
+noextract=("${pkgname}-${pkgver}-linux.gtk.x86_64.tar.gz")
+
+prepare() {
+    mkdir -p ${srcdir}/${pkgname}
+    cd ${srcdir}/${pkgname}
+    tar -xf "${srcdir}/${pkgname}-ce-${pkgver}-linux.gtk.x86_64.tar.gz"
+}
+
+package() {
+    cd ${pkgdir}
+    mkdir -p opt/
+    mkdir -p usr/bin
+    mkdir -p usr/share/applications
+    mkdir -p usr/share/icons/hicolor/48x48/apps
+
+    cp -r ${srcdir}/${pkgname}/dbeaver opt/$pkgname
+    rm opt/${pkgname}/dbeaver.desktop
+    chmod +x opt/${pkgname}/dbeaver
+    cp opt/${pkgname}/icon.xpm usr/share/icons/hicolor/48x48/apps/${pkgname}.xpm
+    ln -s /opt/${pkgname}/dbeaver usr/bin/dbeaver
+    install -m 644 ${srcdir}/dbeaver.desktop ${pkgdir}/usr/share/applications/
+}
