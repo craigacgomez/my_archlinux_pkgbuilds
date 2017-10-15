@@ -2,7 +2,7 @@
 
 pkgname=emby-theater-electron-git
 _pkgname=emby-theater-electron
-pkgver=2.8.4.dee7249
+pkgver=2.9.3.bc845b4
 pkgrel=1
 pkgdesc="Official Emby media server client"
 arch=('i686' 'x86_64')
@@ -18,7 +18,7 @@ sha256sums=('SKIP'
 
 pkgver() {
   cd "${srcdir}/${_pkgname}"
-  printf "2.8.4.%s" "$(git log -1 --pretty=format:%h)"
+  printf "2.9.3.%s" "$(git log -1 --pretty=format:%h)"
 }
 
 package() {
