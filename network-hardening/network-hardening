@@ -6,7 +6,7 @@
 net.ipv4.tcp_syncookies = 1
 net.ipv4.tcp_syn_retries = 2
 net.ipv4.tcp_synack_retries = 2
-net.ipv4.tcp_max_syn_backlog = 4096
+net.ipv4.tcp_max_syn_backlog = 65536
 
 # Disables packet forwarding
 net.ipv4.ip_forward = 1
@@ -40,12 +40,15 @@ net.ipv4.conf.all.log_martians = 1
 net.ipv4.conf.default.log_martians = 1
 
 # Decrease the time default value for tcp_fin_timeout connection
-net.ipv4.tcp_fin_timeout = 7
+net.ipv4.tcp_fin_timeout = 15
 
 # Decrease the time default value for connections to keep alive
-net.ipv4.tcp_keepalive_time = 300
-net.ipv4.tcp_keepalive_probes = 5
-net.ipv4.tcp_keepalive_intvl = 15
+net.ipv4.tcp_keepalive_time = 60
+net.ipv4.tcp_keepalive_intvl = 10
+net.ipv4.tcp_keepalive_probes = 6
+
+# Enable smart MTU discovery when an ICMP black hole detected.
+net.ipv4.tcp_mtu_probing = 1
 
 # Don't relay bootp
 net.ipv4.conf.all.bootp_relay = 0
@@ -53,8 +56,8 @@ net.ipv4.conf.all.bootp_relay = 0
 # Don't proxy arp for anyone
 net.ipv4.conf.all.proxy_arp = 0
 
-# Turn on the tcp_timestamps, accurate timestamp make TCP congestion control algorithms work better
-net.ipv4.tcp_timestamps = 1
+# Turn timestamps off to reduce performance spikes related to timestamp generation.
+net.ipv4.tcp_timestamps = 0
 
 # Enable select acknowledgments
 net.ipv4.tcp_sack = 1
@@ -94,15 +97,15 @@ net.core.default_qdisc = fq_codel
 net.ipv4.tcp_window_scaling = 1
 
 # Increase the read-buffer space allocatable
-net.ipv4.tcp_rmem = 8192 87380 16777216
+net.ipv4.tcp_rmem = 4096 87380 16777216
 net.ipv4.udp_rmem_min = 16384
-net.core.rmem_default = 262144
+net.core.rmem_default = 1048576
 net.core.rmem_max = 16777216
 
 # Increase the write-buffer-space allocatable
-net.ipv4.tcp_wmem = 8192 65536 16777216
+net.ipv4.tcp_wmem = 4096 65536 16777216
 net.ipv4.udp_wmem_min = 16384
-net.core.wmem_default = 262144
+net.core.wmem_default = 1048576
 net.core.wmem_max = 16777216
 
 # Increase number of incoming connections
@@ -116,7 +119,7 @@ net.core.dev_weight = 64
 net.core.optmem_max = 65535
 
 # Increase the tcp-time-wait buckets pool size to prevent simple DOS attacks
-net.ipv4.tcp_max_tw_buckets = 1440000
+net.ipv4.tcp_max_tw_buckets = 65536
 
 # try to reuse time-wait connections, but don't recycle them (recycle can break clients behind NAT)
 net.ipv4.tcp_tw_recycle = 1

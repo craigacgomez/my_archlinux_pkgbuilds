@@ -2,17 +2,17 @@
 # Contributor: Craig Gomez <craigacgomez at gmail.com>
 
 pkgname=network-hardening
-pkgver=1.0
+pkgver=1.1
 pkgrel=1
 pkgdesc="Sysctl TCP/IP stack hardening"
 arch=('any')
 url="https://www.kernel.org/"
 license=('GPL')
 source=("${pkgname}")
-sha256sums=('11f36bb2d37589b178273c972dc9d7c93f25a7d515dce69c471346cdfb9a5d5a')
+sha256sums=('390429780f6be24fe1d8ab75577d9a0dd66b2051d92bc8e603f6c36a9e9616b4')
 install="${pkgname}".install
 
 package() {
     install -dm755 "${pkgdir}/etc/sysctl.d/"
-    install -Dm644 "${srcdir}/${pkgname}" "${pkgdir}/etc/sysctl.d/50-network-hardening.conf"
+    install -Dm644 "${srcdir}/${pkgname}" "${pkgdir}/etc/sysctl.d/70-network-hardening.conf"
 }

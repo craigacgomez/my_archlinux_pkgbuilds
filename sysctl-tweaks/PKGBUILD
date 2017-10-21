@@ -1,0 +1,18 @@
+# Maintainer:  Craig Gomez <craigacgomez at gmail.com>
+# Contributor: Craig Gomez <craigacgomez at gmail.com>
+
+pkgname=sysctl-tweaks
+pkgver=1.0
+pkgrel=1
+pkgdesc="Sysctl performance & secutiry tweaks"
+arch=('any')
+url="https://www.kernel.org/"
+license=('GPL')
+source=("${pkgname}")
+sha256sums=('c16fad513e39f1f35c180f51a9287e1ca3a98edd166ca59df088903370d8317f')
+install="${pkgname}".install
+
+package() {
+    install -dm755 "${pkgdir}/etc/sysctl.d/"
+    install -Dm644 "${srcdir}/${pkgname}" "${pkgdir}/etc/sysctl.d/80-sysctl-tweaks.conf"
+}

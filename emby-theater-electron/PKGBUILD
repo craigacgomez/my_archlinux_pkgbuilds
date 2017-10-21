@@ -2,7 +2,7 @@
 
 pkgname=emby-theater-electron-git
 _pkgname=emby-theater-electron
-pkgver=2.9.3.bc845b4
+pkgver=2.9.3.4142d97
 pkgrel=1
 pkgdesc="Official Emby media server client"
 arch=('i686' 'x86_64')
