@@ -2,7 +2,7 @@
 
 pkgname=emby-theater-electron-git
 _pkgname=emby-theater-electron
-pkgver=2.9.3.4142d97
+pkgver=2.9.6.d9d8344
 pkgrel=1
 pkgdesc="Official Emby media server client"
 arch=('i686' 'x86_64')
@@ -13,12 +13,12 @@ optdepends=('libcec')
 install="${_pkgname}.install"
 source=("git+https://github.com/MediaBrowser/${_pkgname}.git" "${_pkgname}.desktop" "emby.png")
 sha256sums=('SKIP'
-            'f6a38150e735feabd46b97d9f95f7fc74e490eaf37837b82ee6d69c15a431599'
+            '2d047ea776168f94300b2eb8dbbb6aa4d96ade6798badf6bd223532868e9cbe3'
             '0233380122e1cbe6d92e87700450c556f5ab51f95c834e124cf75cc486036531')
 
 pkgver() {
   cd "${srcdir}/${_pkgname}"
-  printf "2.9.3.%s" "$(git log -1 --pretty=format:%h)"
+  printf "2.9.6.%s" "$(git log -1 --pretty=format:%h)"
 }
 
 package() {
@@ -27,6 +27,5 @@ package() {
   install -d "${pkgdir}/opt/${_pkgname}"
   cp -r "${srcdir}/${_pkgname}"/* "${pkgdir}/opt/${_pkgname}/"
   cp "${srcdir}/emby.png" "${pkgdir}/opt/${_pkgname}/"
-  chmod 755 "${pkgdir}/opt/${_pkgname}/et.sh"
   desktop-file-install -m 644 --dir "${pkgdir}/usr/share/applications/" "${srcdir}/${_pkgname}.desktop"
 }
