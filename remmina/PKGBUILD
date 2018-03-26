@@ -3,7 +3,7 @@
 
 pkgname=remmina
 epoch=1
-pkgver=1.2.0rcgit.24
+pkgver=1.2.0rcgit.27
 pkgrel=1
 pkgdesc="remote desktop client written in GTK+"
 arch=(i686 x86_64)
@@ -25,7 +25,7 @@ optdepends=('libxkbfile'
 replaces=('remmina-plugins')
 provides=('remmina-plugins')
 source=("$pkgname-$pkgver.tar.gz::https://github.com/FreeRDP/Remmina/archive/v${pkgver/rc/-rc}.tar.gz")
-sha256sums=('7d959485469b8e99d4d950e6e916b22e28a6855d58955a1be7f49b3a5650e82c')
+sha256sums=('5f96fc2b1013a12acada30991ec7f46b53b731e71f735e662d830d9083db9826')
 
 prepare() {
   cd "$srcdir"/Remmina-${pkgver/rc/-rc}/
