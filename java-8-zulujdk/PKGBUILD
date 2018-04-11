@@ -1,0 +1,89 @@
+# Maintainer: Craig Gomez
+
+pkgname=java-8-zulujdk
+_major=8
+_minor=163
+_build=01
+_zulu_build=8.28.0.1
+_jdkname=zulujdk8
+pkgver="${_major}u${_minor}"
+pkgrel=1
+pkgdesc="Zulu JDK - Certified build of OpenJDK ${_major}"
+arch=('x86_64')
+url="http://zulu.org/"
+license=('GPL2')
+depends=('ca-certificates-java' 'java-environment-common' 'java-runtime-common' 'nss')
+optdepends=('alsa-lib: for basic sound support'
+            'icedtea-web: web browser plugin + Java Web Start'
+            'gtk2: for the Gtk+ look and feel - desktop usage'
+            'java-rhino: for some JavaScript support')
+provides=("java-runtime-headless=${_major}" "java-runtime-headless-openjdk=${_major}" "java-runtime-headless-jre=${_major}"
+          "java-runtime=${_major}" "java-runtime-openjdk=${_major}" "java-runtime-jre=${_major}"
+          "java-environment=${_major}" "java-environment-openjdk=${_major}" "java-environment-jdk=${_major}")
+options=('!strip')
+_backup_etc=("etc/${pkgname}/amd64/jvm.cfg"
+        "etc/${pkgname}/calendars.properties"
+        "etc/${pkgname}/content-types.properties"
+        "etc/${pkgname}/fontconfig.properties.src"
+        "etc/${pkgname}/flavormap.properties"
+        "etc/${pkgname}/images/cursors/cursors.properties"
+        "etc/${pkgname}/logging.properties"
+        "etc/${pkgname}/management/jmxremote.access"
+        "etc/${pkgname}/management/jmxremote.password"
+        "etc/${pkgname}/management/management.properties"
+        "etc/${pkgname}/management/snmp.acl"
+        "etc/${pkgname}/net.properties"
+        "etc/${pkgname}/psfont.properties.ja"
+        "etc/${pkgname}/psfontj2d.properties"
+        "etc/${pkgname}/security/java.policy"
+        "etc/${pkgname}/security/java.security"
+        "etc/${pkgname}/sound.properties")
+source=("http://cdn.azul.com/zulu/bin/zulu${_zulu_build}-jdk${_major}.0.${_minor}-linux_x64.tar.gz")
+install="${pkgname}".install
+sha512sums=('f04a50b6623938862fd390843d92267876811a5f805b68ae91434763e7f42230708f8eb9fd3562fc734edebfd558bf06cf03b7b128282193ddec100561100c09')
+
+package() {
+    cd zulu"${_zulu_build}"-jdk"${_major}".0."${_minor}"-linux_x64
+
+    rm jre/lib/fontconfig.*.bfc
+    rm jre/lib/fontconfig.*.properties.src
+    rm jre/ASSEMBLY_EXCEPTION
+    rm jre/LICENSE
+    rm jre/THIRD_PARTY_README
+
+    install -d -m 755 "${pkgdir}"/usr/lib/jvm/"${pkgname}"
+    cp --recursive --preserve=mode,ownership,timestamps * "${pkgdir}"/usr/lib/jvm/"${pkgname}"
+
+    cd "${pkgdir}"/usr/lib/jvm/"${pkgname}"
+
+    # Set config files
+    mv jre/lib/management/jmxremote.password{.template,}
+    mv jre/lib/management/snmp.acl{.template,}
+
+    # Man pages
+    install -d -m 755 "${pkgdir}"/usr/share/man/{,ja/}man1/
+    for file in man/man1/*; do
+        install -m 644 "${file}" "${pkgdir}"/usr/share/"${file}"-"${_jdkname}".1
+    done
+    for file in man/ja/man1/*; do
+        install -m 644 "${file}" "${pkgdir}"/usr/share/"${file}"-"${_jdkname}".1
+    done
+    rm -r man
+
+    # Link JKS keystore from ca-certificates-utils
+    rm -f "${pkgdir}"/usr/lib/jvm/"${pkgname}"/jre/lib/security/cacerts
+    ln -sf /etc/ssl/certs/java/cacerts "${pkgdir}"/usr/lib/jvm/"${pkgname}"/jre/lib/security/cacerts
+
+    # Install license
+    install -d -m 755 "${pkgdir}"/usr/share/licenses/"${pkgname}"
+    install -m 644 ASSEMBLY_EXCEPTION CLASSPATH_EXCEPTION_NOTE DISCLAIMER LICENSE THIRD_PARTY_README readme.txt "${pkgdir}"/usr/share/licenses/"${pkgname}"
+    rm ASSEMBLY_EXCEPTION CLASSPATH_EXCEPTION_NOTE DISCLAIMER LICENSE THIRD_PARTY_README readme.txt
+    chmod ugo+r "${pkgdir}"/usr/share/licenses/"${pkgname}"/*
+
+    # Move config files that were set in _backup_etc from ./lib to /etc
+    for file in "${_backup_etc[@]}"; do
+        _filepkgpath=jre/lib/"${file#etc/${pkgname}}"
+        install -D -m 644 "${_filepkgpath}" "${pkgdir}"/"${file}"
+        ln -sf /"${file}" "${_filepkgpath}"
+    done
+}

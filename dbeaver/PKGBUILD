@@ -1,7 +1,7 @@
 # Maintainer: Craig Gomez
 
 pkgname=dbeaver
-pkgver=5.0.1
+pkgver=5.0.2
 pkgrel=1
 pkgdesc="A free universal database tool for developers and database administrators."
 arch=('i686' 'x86_64')
@@ -12,7 +12,7 @@ provides=('dbeaver')
 conflicts=('dbeaver')
 source=(dbeaver.desktop http://dbeaver.jkiss.org/files/${pkgver}/${pkgname}-ce-${pkgver}-linux.gtk.x86_64.tar.gz)
 sha256sums=('3b4385b5fe8e5807fb24ccf52355b3d4471a9946960e24037375181196f08f25'
-            '87622ac295dc27132becedd57f8ef58212f73bf2d67803c051d3779807572108')
+            '97064e61adb88fa1f43f28c088eb21a172aa9787d6df13ab7581651234f8684a')
 noextract=("${pkgname}-${pkgver}-linux.gtk.x86_64.tar.gz")
 
 prepare() {

@@ -1,0 +1,11 @@
+post_install() {
+    archlinux-java set java-8-zulujdk
+}
+
+post_upgrade() {
+    archlinux-java fix
+}
+
+pre_remove() {
+    archlinux-java unset
+}
