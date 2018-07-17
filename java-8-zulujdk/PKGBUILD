@@ -2,15 +2,14 @@
 
 pkgname=java-8-zulujdk
 _major=8
-_minor=163
-_build=01
-_zulu_build=8.28.0.1
+_minor=172
+_zulu_build=8.30.0.1
 _jdkname=zulujdk8
 pkgver="${_major}u${_minor}"
 pkgrel=1
 pkgdesc="Zulu JDK - Certified build of OpenJDK ${_major}"
 arch=('x86_64')
-url="http://zulu.org/"
+url="https://www.azul.com/downloads/zulu/"
 license=('GPL2')
 depends=('ca-certificates-java' 'java-environment-common' 'java-runtime-common' 'nss')
 optdepends=('alsa-lib: for basic sound support'
@@ -40,7 +39,7 @@ _backup_etc=("etc/${pkgname}/amd64/jvm.cfg"
         "etc/${pkgname}/sound.properties")
 source=("http://cdn.azul.com/zulu/bin/zulu${_zulu_build}-jdk${_major}.0.${_minor}-linux_x64.tar.gz")
 install="${pkgname}".install
-sha512sums=('f04a50b6623938862fd390843d92267876811a5f805b68ae91434763e7f42230708f8eb9fd3562fc734edebfd558bf06cf03b7b128282193ddec100561100c09')
+sha512sums=('d30e5da24f83159bcdb37e74581b3b26bd5204fcb8e3d7d789ebc487ae52c32f019e88ad9ef31bee9d42d16bf2a9add9d8e99c85269f3f5aaef6daedb6c2afbe')
 
 package() {
     cd zulu"${_zulu_build}"-jdk"${_major}".0."${_minor}"-linux_x64

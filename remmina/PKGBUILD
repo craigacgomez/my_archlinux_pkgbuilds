@@ -3,34 +3,30 @@
 
 pkgname=remmina
 epoch=1
-pkgver=1.2.0rcgit.29
+pkgver=1.2.30.1
 pkgrel=1
 pkgdesc="remote desktop client written in GTK+"
-arch=(i686 x86_64)
-url="http://www.remmina.org/"
+arch=(x86_64)
+url="https://www.remmina.org/"
 license=('GPL')
 depends=('gtk3' 'zlib' 'libjpeg' 'libssh' 'avahi' 'vte3'
-   'libgcrypt' 'libxdmcp' 'libsecret' 'webkit2gtk'
-   'libappindicator-gtk2' 'libappindicator-gtk3')
-makedepends=('intltool' 'pkgconfig' 'cmake' 'libgnome-keyring'
+     'libappindicator-gtk2' 'libappindicator-gtk3'
+     'libgcrypt' 'libxdmcp' 'libsecret' 'webkit2gtk')
+makedepends=('intltool' 'cmake' 'libgnome-keyring'
              'avahi' 'libxkbfile' 'freerdp' 'telepathy-glib'
-             'libvncserver')
+             'libvncserver' 'spice-protocol' 'spice-gtk3')
 optdepends=('libxkbfile'
             'freerdp'
             'telepathy-glib'
             'gnome-keyring'
             'nxproxy'
+            'spice-gtk3'
             'xorg-server-xephyr: XDMCP support'
             'libvncserver: VNC client/server support')
 replaces=('remmina-plugins')
 provides=('remmina-plugins')
 source=("$pkgname-$pkgver.tar.gz::https://github.com/FreeRDP/Remmina/archive/v${pkgver/rc/-rc}.tar.gz")
-sha256sums=('24fdcc8b69f8563c464b6ac77dd6bf93a1c963d90f8a114e1a3abad9af2b8682')
-
-prepare() {
-  cd "$srcdir"/Remmina-${pkgver/rc/-rc}/
-#  patch -p1 <"$srcdir"/fix-freerdp-name.patch
-}
+sha256sums=('0251ead128e61143e23752d77dcd853b0850508e84829c8c36a2addc9d6f0da9')
 
 build() {
   cd "$srcdir"/Remmina-${pkgver/rc/-rc}/
@@ -44,5 +40,4 @@ build() {
 package() {
   cd "$srcdir"/Remmina-${pkgver/rc/-rc}/
   make DESTDIR="$pkgdir" install
-  rm -rf "$pkgdir"/build
 }
