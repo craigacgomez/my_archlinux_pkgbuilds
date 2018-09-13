@@ -1,24 +1,25 @@
 # Maintainer: Craig Gomez
 
-pkgname=dbeaver
-pkgver=5.1.3
+_pkgname=dbeaver
+pkgname=dbeaver-ce
+pkgver=5.2.0
 pkgrel=1
 pkgdesc="A free universal database tool for developers and database administrators."
 arch=('i686' 'x86_64')
-url="http://dbeaver.jkiss.org/"
+url="https://dbeaver.io"
 license=("ASL 2.0")
 depends=('java-runtime>=8' 'gtk2' 'gtk-update-icon-cache')
 provides=('dbeaver')
 conflicts=('dbeaver')
-source=(dbeaver.desktop http://dbeaver.jkiss.org/files/${pkgver}/${pkgname}-ce-${pkgver}-linux.gtk.x86_64.tar.gz)
+source=(dbeaver.desktop https://dbeaver.io/files/${pkgver}/${pkgname}-${pkgver}-linux.gtk.x86_64.tar.gz)
 sha256sums=('3b4385b5fe8e5807fb24ccf52355b3d4471a9946960e24037375181196f08f25'
-            'e1009b9efbef69087056fdd05e644e3b610ec7a2345f419fc0945d7791c8d3fe')
+            '4e024c9c3639a65b131b386bad32c22a45b558c6f727d9677da211f108c3428e')
 noextract=("${pkgname}-${pkgver}-linux.gtk.x86_64.tar.gz")
 
 prepare() {
-    mkdir -p ${srcdir}/${pkgname}
-    cd ${srcdir}/${pkgname}
-    tar -xf "${srcdir}/${pkgname}-ce-${pkgver}-linux.gtk.x86_64.tar.gz"
+    mkdir -p ${srcdir}/${_pkgname}
+    cd ${srcdir}/${_pkgname}
+    tar -xf "${srcdir}/${pkgname}-${pkgver}-linux.gtk.x86_64.tar.gz"
 }
 
 package() {
@@ -28,10 +29,10 @@ package() {
     mkdir -p usr/share/applications
     mkdir -p usr/share/icons/hicolor/48x48/apps
 
-    cp -r ${srcdir}/${pkgname}/dbeaver opt/$pkgname
-    rm opt/${pkgname}/dbeaver.desktop
-    chmod +x opt/${pkgname}/dbeaver
-    cp opt/${pkgname}/icon.xpm usr/share/icons/hicolor/48x48/apps/${pkgname}.xpm
-    ln -s /opt/${pkgname}/dbeaver usr/bin/dbeaver
+    cp -r ${srcdir}/${_pkgname}/dbeaver opt/$_pkgname
+    rm opt/${_pkgname}/dbeaver.desktop
+    chmod +x opt/${_pkgname}/dbeaver
+    cp opt/${_pkgname}/icon.xpm usr/share/icons/hicolor/48x48/apps/${_pkgname}.xpm
+    ln -s /opt/${_pkgname}/dbeaver usr/bin/dbeaver
     install -m 644 ${srcdir}/dbeaver.desktop ${pkgdir}/usr/share/applications/
 }
