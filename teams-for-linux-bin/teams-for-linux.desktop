@@ -1,0 +1,10 @@
+[Desktop Entry]
+Name=Teams For Linux
+Comment=Unofficial Microsoft Teams client for Linux using Electron.
+Path=/opt/teams-for-linux
+Exec=/opt/teams-for-linux/teams --partition persist:teams-linux --userAgent edge
+Icon=teams-for-linux
+Type=Application
+StartupNotify=true
+Categories=Network;InstantMessaging;Application;
+Terminal=false
