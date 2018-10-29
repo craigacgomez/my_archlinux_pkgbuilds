@@ -2,8 +2,8 @@
 
 pkgname=java-8-zulujdk
 _major=8
-_minor=172
-_zulu_build=8.30.0.1
+_minor=181
+_zulu_build=8.31.0.1
 _jdkname=zulujdk8
 pkgver="${_major}u${_minor}"
 pkgrel=1
@@ -39,7 +39,7 @@ _backup_etc=("etc/${pkgname}/amd64/jvm.cfg"
         "etc/${pkgname}/sound.properties")
 source=("http://cdn.azul.com/zulu/bin/zulu${_zulu_build}-jdk${_major}.0.${_minor}-linux_x64.tar.gz")
 install="${pkgname}".install
-sha512sums=('d30e5da24f83159bcdb37e74581b3b26bd5204fcb8e3d7d789ebc487ae52c32f019e88ad9ef31bee9d42d16bf2a9add9d8e99c85269f3f5aaef6daedb6c2afbe')
+sha512sums=('ff87e0d7ee1bc72a1d25fddacc8053254a103ae084fdbb8e9611c4937339d1bc820128f3f16873c3aa25c3c8161d6f515deeb644bf88d85f000c623b2a8afd46')
 
 package() {
     cd zulu"${_zulu_build}"-jdk"${_major}".0."${_minor}"-linux_x64
