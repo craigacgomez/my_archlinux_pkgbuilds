@@ -1,0 +1,15 @@
+post_install() {
+    ln -s /usr/lib/networkmanager/nm-openconnect-auth-dialog /usr/lib/gnome-shell/nm-openconnect-auth-dialog
+}
+
+pre_upgrade() {
+    rm -f /usr/lib/gnome-shell/nm-openconnect-auth-dialog
+}
+
+post_upgrade() {
+    ln -s /usr/lib/networkmanager/nm-openconnect-auth-dialog /usr/lib/gnome-shell/nm-openconnect-auth-dialog
+}
+
+pre_remove() {
+    rm -f /usr/lib/gnome-shell/nm-openconnect-auth-dialog
+}
