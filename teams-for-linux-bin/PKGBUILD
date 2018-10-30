@@ -9,25 +9,27 @@ arch=('any')
 url='https://github.com/IsmaelMartinez/teams-for-linux'
 license=('GPLv3')
 depends=('nodejs' 'xdg-utils' 'electron')
-makedepends=('npm')
-provides=('teams-for-linux')
-conflicts=('teams-for-linux')
+provides=("${_pkgname}")
+conflicts=("${_pkgname}")
 source=("${url}/releases/download/v${pkgver}/${_pkgname}-${pkgver}.tar.gz"
-        "teams-for-linux.png::https://raw.githubusercontent.com/IsmaelMartinez/teams-for-linux/master/build/icons/256x256.png"
-        "teams-for-linux.desktop")
-sha256sums=('3d4e9063b95ab2cc36c8a3a7935acedf723b57983c7ae1929bc98778e99cbb36'
+        "${_pkgname}.png::https://raw.githubusercontent.com/IsmaelMartinez/teams-for-linux/master/build/icons/256x256.png"
+        "${_pkgname}-chrome.desktop"
+        "${_pkgname}-edge.desktop")
+sha256sums=('5869997e6339e197f9092f16125d670299c48028fa51484cfc47860ccf4b49dc'
             '879e82fd06117f03bb26fd9637f582001c42572b7aeedb70a0081e676033b112'
-            '9c954c91d34f0845c18499a3397b9fa61e95ff56b3ee6482e48ed6fcc24dbf11')
+            '03e998b730d6729beddc37f9e786caff8987522f1dafdc9633c1c4f61306ae2f'
+            '46403ea04fd162fdf42e28c883aa338cfb0f3a430ea74991d4773ee7f3d80cd1')
 
 package() {
-    cd "${srcdir}"/"${_pkgname}"-"${pkgver}"
-    install -dm755 "${pkgdir}"/opt/"${_pkgname}"
-    cp -r --preserve=mode . "${pkgdir}"/opt/"${_pkgname}"
+    cd "${srcdir}/${_pkgname}-${pkgver}"
+    install -dm755 "${pkgdir}/opt/${_pkgname}"
+    cp -r --preserve=mode . "${pkgdir}/opt/${_pkgname}"
 
-    install -Dm644 LICENSE.electron.txt "${pkgdir}"/usr/share/licenses/"${pkgname}"/LICENSE.electron.txt
-    install -Dm644 LICENSES.chromium.html "${pkgdir}"/usr/share/licenses/"${pkgname}"/LICENSES.chromium.html
+    install -Dm644 LICENSE.electron.txt "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE.electron.txt"
+    install -Dm644 LICENSES.chromium.html "${pkgdir}/usr/share/licenses/${pkgname}/LICENSES.chromium.html"
 
-    install -Dm644 "${srcdir}"/"${_pkgname}".png "${pkgdir}"/usr/share/icons/hicolor/256x256/apps/teams-for-linux.png
+    install -Dm644 "${srcdir}/${_pkgname}.png" "${pkgdir}/usr/share/icons/hicolor/256x256/apps/${_pkgname}.png"
 
-    install -Dm644 "${srcdir}"/"${_pkgname}".desktop "${pkgdir}"/usr/share/applications/"${_pkgname}".desktop
+    install -Dm644 "${srcdir}/${_pkgname}-chrome.desktop" "${pkgdir}/usr/share/applications/${_pkgname}-chrome.desktop"
+    install -Dm644 "${srcdir}/${_pkgname}-edge.desktop" "${pkgdir}/usr/share/applications/${_pkgname}-edge.desktop"
 }

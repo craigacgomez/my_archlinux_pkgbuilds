@@ -1,0 +1,10 @@
+[Desktop Entry]
+Name=Teams For Linux (Chrome)
+Comment=Unofficial Microsoft Teams client for Linux using Electron (Chrome User Agent).
+Path=/opt/teams-for-linux
+Exec=/opt/teams-for-linux/teams --partition persist:teams-chrome --userAgent chrome
+Icon=teams-for-linux
+Type=Application
+StartupNotify=true
+Categories=Network;InstantMessaging;Application;
+Terminal=false
