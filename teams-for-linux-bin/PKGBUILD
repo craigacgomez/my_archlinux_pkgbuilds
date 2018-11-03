@@ -1,35 +1,55 @@
-# Maintainer: Ivelin Velkov <ivelin dot velkov at gmail dot com>
+# Maintainer: Ismael Martinez
 
-pkgname=teams-for-linux-bin
-_pkgname=teams-for-linux
-pkgver=0.1.7
+pkgname=teams-for-linux
+pkgver=0.1.9
 pkgrel=1
 pkgdesc='Unofficial Microsoft Teams client for Linux using Electron.'
 arch=('any')
 url='https://github.com/IsmaelMartinez/teams-for-linux'
 license=('GPLv3')
-depends=('nodejs' 'xdg-utils' 'electron')
-provides=("${_pkgname}")
-conflicts=("${_pkgname}")
-source=("${url}/releases/download/v${pkgver}/${_pkgname}-${pkgver}.tar.gz"
-        "${_pkgname}.png::https://raw.githubusercontent.com/IsmaelMartinez/teams-for-linux/master/build/icons/256x256.png"
-        "${_pkgname}-chrome.desktop"
-        "${_pkgname}-edge.desktop")
-sha256sums=('5869997e6339e197f9092f16125d670299c48028fa51484cfc47860ccf4b49dc'
-            '879e82fd06117f03bb26fd9637f582001c42572b7aeedb70a0081e676033b112'
-            '03e998b730d6729beddc37f9e786caff8987522f1dafdc9633c1c4f61306ae2f'
-            '46403ea04fd162fdf42e28c883aa338cfb0f3a430ea74991d4773ee7f3d80cd1')
+depends=('nodejs' 'xdg-utils' 'electron' 'npm' 'yarn')
+provides=("${pkgname}")
+conflicts=("${pkgname}")
+options=(!strip)
+install="${pkgname}.install"
+source=("https://github.com/IsmaelMartinez/teams-for-linux/archive/v${pkgver}.tar.gz"
+        "${pkgname}.desktop"
+        "${pkgname}.sh"
+        "icon-96x96-monochrome.png")
+sha256sums=('9bd286226e25753365850a50c69d574ad5789105c062b3332c88dc62e6d0e0e7'
+            '47632a81e96fceadaa7080eeddb11b42e06e51f6002290435b0a4a635d355297'
+            '332b041b5ca5fcc84fe16b7046880e0b7153e0a79f04b3bece67013ce2a03ed2'
+            'ff4e698f7c79e96cf820b1f10bf0e5199c9dad2a533ef7b4a4b1f1ca03fcad2c')
+
+prepare() {
+    # patch pakcage.json (replace yarn install with yarn check since we cannot run yarn after install without root)
+    # besides, we already run yarn insall during package installation and upgrade
+    cd "${srcdir}/${pkgname}-${pkgver}"
+    sed -i "s/yarn install/yarn check/" package.json
+}
 
 package() {
-    cd "${srcdir}/${_pkgname}-${pkgver}"
-    install -dm755 "${pkgdir}/opt/${_pkgname}"
-    cp -r --preserve=mode . "${pkgdir}/opt/${_pkgname}"
+    # install application
+    cd "${srcdir}/${pkgname}-${pkgver}"
+    install -dm755 "${pkgdir}/opt/${pkgname}"
+    cp -r --preserve=mode . "${pkgdir}/opt/${pkgname}"
+    cp -f --preserve=mode "${srcdir}/icon-96x96-monochrome.png" "${pkgdir}/opt/${pkgname}/app/lib/assets/icons/icon-96x96.png"
 
-    install -Dm644 LICENSE.electron.txt "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE.electron.txt"
-    install -Dm644 LICENSES.chromium.html "${pkgdir}/usr/share/licenses/${pkgname}/LICENSES.chromium.html"
+    # install icons
+    cd "${srcdir}/${pkgname}-${pkgver}/build/icons"
+    for icon in *.png
+    do
+        iconname=$(basename "${icon}")
+        dimensions="${iconname%.*}"
+        install -Dm644 "${srcdir}/${pkgname}-${pkgver}/build/icons/${icon}" "${pkgdir}/usr/share/icons/hicolor/${dimensions}/apps/${pkgname}.png"
+    done
 
-    install -Dm644 "${srcdir}/${_pkgname}.png" "${pkgdir}/usr/share/icons/hicolor/256x256/apps/${_pkgname}.png"
+    # install executable
+    install -Dm755 "${srcdir}/${pkgname}.sh" "${pkgdir}/usr/bin/${pkgname}"
 
-    install -Dm644 "${srcdir}/${_pkgname}-chrome.desktop" "${pkgdir}/usr/share/applications/${_pkgname}-chrome.desktop"
-    install -Dm644 "${srcdir}/${_pkgname}-edge.desktop" "${pkgdir}/usr/share/applications/${_pkgname}-edge.desktop"
+    # install license
+    install -Dm644 "${srcdir}/${pkgname}-${pkgver}/LICENSE.md" "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE.md"
+
+    # install desktop entry
+    install -Dm644 "${srcdir}/${pkgname}.desktop" "${pkgdir}/usr/share/applications/${pkgname}.desktop"
 }

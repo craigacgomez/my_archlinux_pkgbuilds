@@ -1,0 +1,13 @@
+post_install() {
+    cd /opt/teams-for-linux
+    yarn install
+}
+
+post_upgrade() {
+    cd /opt/teams-for-linux
+    yarn install
+}
+
+post_remove() {
+    rm -rf /opt/teams-for-linux
+}
